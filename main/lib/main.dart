@@ -74,10 +74,13 @@ class _HomeState extends State<Home> {
               value: animal.animalsType[index].getType().toString(),
               groupValue: staticVals.radioBox_AnimalsGroupBox,
               onChanged: (value) {
-                staticVals.radioBox_AnimalsGroupBox =
-                    animal.animalsType[index].getType().toString();
+                setState(() {
+                  staticVals.radioBox_AnimalsGroupBox =
+                      animal.animalsType[index].getType().toString();
+                });
                 print("GroupBox: ${staticVals.radioBox_AnimalsGroupBox}");
-                print("Value: ${animal.animalsType[index].getType().toString()}");
+                print(
+                    "Value: ${animal.animalsType[index].getType().toString()}");
               },
               title: Text(animal.animalsType[index].getType()),
               subtitle: Text(
