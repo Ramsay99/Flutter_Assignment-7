@@ -9,6 +9,8 @@ class animal {
     print("$_type Added Successfully!");
   }
 
+  animal.empty();
+
   String getType() {
     return _type;
   }
