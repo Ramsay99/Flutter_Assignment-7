@@ -16,7 +16,9 @@ void main(List<String> args) {
   dog.addToAvailableBreeds("German Shepherd");
   dog.addToAvailableBreeds("Bulldog");
 
-  animal cat = animal("Cat");
+  animal cat = animal("Cat",
+      image:
+          "https://images.pexels.com/photos/982865/pexels-photo-982865.jpeg?auto=compress&cs=tinysrgb&w=600");
   cat.addToAvailableBreeds("Sphynx");
   cat.addToAvailableBreeds("Himalayan");
 

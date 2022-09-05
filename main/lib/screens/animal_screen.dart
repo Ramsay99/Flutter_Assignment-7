@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:main/staticVals.dart';
 
+String helloMsg = "Hello ${staticVals.radioBox_AnimalsGroupBox}";
+
 class animal_screen extends StatelessWidget {
   animal_screen(
       {super.key,
@@ -10,6 +12,7 @@ class animal_screen extends StatelessWidget {
       String animalImage = staticVals.DEFAULT_NETWORK_IMAGE}) {
     staticVals.radioBox_AnimalsGroupBox = animalGroupBox;
     staticVals.defaultAnimalImage = NetworkImage(animalImage);
+    helloMsg = "Hello $animalGroupBox";
   }
 
   @override
@@ -34,7 +37,6 @@ class _animal_statefulState extends State<animal_stateful> {
       body: Center(
         child: Container(
           width: staticVals.maxWidth,
-          // height: 500,
           alignment: Alignment.topCenter,
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -44,11 +46,10 @@ class _animal_statefulState extends State<animal_stateful> {
           ),
           child: Column(
             children: [
-              Text("Hello ${staticVals.radioBox_AnimalsGroupBox}"),
+              Text(helloMsg),
               Container(
                 color: Colors.amber,
                 width: staticVals.maxWidth,
-                // height: double.infinity,
                 child: Container(),
               ),
             ],
