@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:main/staticVals.dart';
 
 class animal_screen extends StatelessWidget {
-   animal_screen({super.key}){
-    print(staticVals.radioBox_AnimalsGroupBox);
-    // staticVals.radioBox_AnimalsGroupBox = "";
+  animal_screen(
+      {super.key,
+      required String animalGroupBox,
+      String animalImage = staticVals.DEFAULT_NETWORK_IMAGE}) {
+    staticVals.radioBox_AnimalsGroupBox = animalGroupBox;
+    staticVals.defaultAnimalImage = NetworkImage(animalImage);
   }
 
   @override
@@ -26,10 +29,31 @@ class _animal_statefulState extends State<animal_stateful> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown.shade400,
       appBar: AppBar(),
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: Text("hello ${staticVals.radioBox_AnimalsGroupBox}"),
+      body: Center(
+        child: Container(
+          width: staticVals.maxWidth,
+          // height: 500,
+          alignment: Alignment.topCenter,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: staticVals.defaultAnimalImage,
+              fit: BoxFit.fill,
+            ),
+          ),
+          child: Column(
+            children: [
+              Text("Hello ${staticVals.radioBox_AnimalsGroupBox}"),
+              Container(
+                color: Colors.amber,
+                width: staticVals.maxWidth,
+                // height: double.infinity,
+                child: Container(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

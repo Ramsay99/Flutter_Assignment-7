@@ -7,6 +7,19 @@ import 'package:main/animal.dart';
 import 'package:main/screens/animal_screen.dart';
 
 void main(List<String> args) {
+  print("CLEAR DEBUG CONSOLE\n.\n,\n.\n,\n.\n,");
+  animal.animalsType.clear();
+  animal dog = animal("Dog",
+      image:
+          "https://images.pexels.com/photos/5731805/pexels-photo-5731805.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  dog.addToAvailableBreeds("Labrador");
+  dog.addToAvailableBreeds("German Shepherd");
+  dog.addToAvailableBreeds("Bulldog");
+
+  animal cat = animal("Cat");
+  cat.addToAvailableBreeds("Sphynx");
+  cat.addToAvailableBreeds("Himalayan");
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(appBarTheme: AppBarTheme(color: Colors.brown.shade300)),
@@ -51,16 +64,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    animal.animalsType.clear();
-    animal dog = animal("Dog");
-    dog.addToAvailableBreeds("Labrador");
-    dog.addToAvailableBreeds("German Shepherd");
-    dog.addToAvailableBreeds("Bulldog");
-
-    animal cat = animal("Cat");
-    cat.addToAvailableBreeds("Sphynx");
-    cat.addToAvailableBreeds("Himalayan");
-
     return Container(
       // color: Colors.red,
       width: double.infinity,
@@ -69,11 +72,30 @@ class _HomeState extends State<Home> {
       child: ListView(children: [
         displayAnimals_RadioBtns(),
         ElevatedButton.icon(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all(Colors.brown.shade600)),
           onPressed: () {
+            String thisAnimalImage = staticVals.DEFAULT_NETWORK_IMAGE;
+            try {
+              thisAnimalImage = animal.animalsType[
+                      animal.getAnimalPositionInList(
+                          staticVals.radioBox_AnimalsGroupBox)]
+                  .getImageURL();
+            } catch (e) {
+              print(e);
+            }
             setState(() {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return animal_screen();
-              },));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return animal_screen(
+                        animalGroupBox: staticVals.radioBox_AnimalsGroupBox,
+                        animalImage: thisAnimalImage);
+                  },
+                ),
+              );
             });
           },
           icon: Icon(Icons.double_arrow),
@@ -86,8 +108,8 @@ class _HomeState extends State<Home> {
   SizedBox displayAnimals_RadioBtns() {
     return SizedBox(
       width: staticVals.maxWidth,
-      height: 65 *
-          3, // 65 is the hieght of one animal radioBtn, & it displays 3 RadioBtns at a time.
+      height: 65 * 3,
+      // 65 is the hieght of one animal radioBtn, & it displays 3 RadioBtns at a time.
       child: ListView.builder(
         itemCount: animal.animalsType.length,
         itemBuilder: (context, index) {
@@ -99,8 +121,9 @@ class _HomeState extends State<Home> {
                 staticVals.radioBox_AnimalsGroupBox =
                     animal.animalsType[index].getType().toString();
               });
-              print("GroupBox: ${staticVals.radioBox_AnimalsGroupBox}");
-              print("Value: ${animal.animalsType[index].getType().toString()}");
+              print("---GroupBox: ${staticVals.radioBox_AnimalsGroupBox}");
+              print(
+                  "---Value: ${animal.animalsType[index].getType().toString()}");
             },
             title: Text(animal.animalsType[index].getType()),
             subtitle: Text(
