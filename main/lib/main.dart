@@ -87,18 +87,7 @@ class _HomeState extends State<Home> {
             } catch (e) {
               print(e);
             }
-            setState(() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return animal_screen(
-                        animalGroupBox: staticVals.radioBox_AnimalsGroupBox,
-                        animalImage: thisAnimalImage);
-                  },
-                ),
-              );
-            });
+            setState(() => pushNewAnimalPage(thisAnimalImage));
           },
           icon: Icon(Icons.double_arrow),
           label: Text("Open Page based on the Selected RadioBtn"),
@@ -132,6 +121,19 @@ class _HomeState extends State<Home> {
                 "Available Breeds: ${animal.animalsType[index].getAvailableBreeds()}"),
             secondary: Icon(Icons.remove_circle),
           );
+        },
+      ),
+    );
+  }
+
+  pushNewAnimalPage(String thisAnimalImage) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return animal_screen(
+              animalGroupBox: staticVals.radioBox_AnimalsGroupBox,
+              animalImage: thisAnimalImage);
         },
       ),
     );
