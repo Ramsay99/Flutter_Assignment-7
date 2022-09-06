@@ -17,7 +17,7 @@ class animal_screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return animal_stateful();
+    return const animal_stateful();
   }
 }
 
@@ -46,7 +46,11 @@ class _animal_statefulState extends State<animal_stateful> {
           ),
           child: Column(
             children: [
-              Text(helloMsg),
+              Text(helloMsg,
+                  style: const TextStyle(
+                    height: 2,
+                    fontSize: 30,
+                  )),
               Container(
                 color: Colors.amber,
                 width: staticVals.maxWidth,

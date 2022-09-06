@@ -31,7 +31,6 @@ void main(List<String> args) {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,16 +40,7 @@ class MyApp extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Container(
-          width: staticVals.maxWidth,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: ExactAssetImage('images/Home_BackGround_BrownishSky.jpg'),
-              fit: BoxFit.fill,
-            ),
-          ),
-          child: Home(),
-        ),
+        child: Home(),
       ),
     );
   }
@@ -64,35 +54,61 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List backgroundAvailableImages = ["sheep", "horse", "default"];
+  String selectedBackgroundImage = "sheep"; // backgroundAvailableImages[0];
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.red,
-      width: double.infinity,
-      height: double.infinity,
-      alignment: Alignment.topCenter,
-      child: ListView(children: [
-        displayAnimals_RadioBtns(),
-        ElevatedButton.icon(
-          style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Colors.brown.shade600)),
-          onPressed: () {
-            String thisAnimalImage = staticVals.DEFAULT_NETWORK_IMAGE;
-            try {
-              thisAnimalImage = animal.animalsType[
-                      animal.getAnimalPositionInList(
-                          staticVals.radioBox_AnimalsGroupBox)]
-                  .getImageURL();
-            } catch (e) {
-              print(e);
-            }
-            setState(() => pushNewAnimalPage(thisAnimalImage));
-          },
-          icon: Icon(Icons.double_arrow),
-          label: Text("Open Page based on the Selected RadioBtn"),
-        )
-      ]),
+      width: staticVals.maxWidth,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: ExactAssetImage(staticVals
+              .background_ExactAssertImgPath(selectedBackgroundImage)),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        alignment: Alignment.topCenter,
+        child: ListView(children: [
+          displayAnimals_RadioBtns(),
+          ElevatedButton.icon(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(Colors.brown.shade600)),
+            onPressed: () {
+              String thisAnimalImage = staticVals.DEFAULT_NETWORK_IMAGE;
+              try {
+                thisAnimalImage = animal.animalsType[
+                        animal.getAnimalPositionInList(
+                            staticVals.radioBox_AnimalsGroupBox)]
+                    .getImageURL();
+              } catch (e) {
+                print(e);
+              }
+              setState(() => pushNewAnimalPage(thisAnimalImage));
+            },
+            icon: Icon(Icons.double_arrow),
+            label: Text("Open Page based on the Selected RadioBtn"),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            alignment: Alignment.bottomLeft,
+            child: DropdownButton(
+              value: selectedBackgroundImage,
+              items: backgroundAvailableImages
+                  .map((e) => DropdownMenuItem(value: e, child: Text("$e")))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  selectedBackgroundImage = value.toString();
+                });
+              },
+            ),
+          )
+        ]),
+      ),
     );
   }
 
@@ -119,7 +135,7 @@ class _HomeState extends State<Home> {
             title: Text(animal.animalsType[index].getType()),
             subtitle: Text(
                 "Available Breeds: ${animal.animalsType[index].getAvailableBreeds()}"),
-            secondary: Icon(Icons.remove_circle),
+            secondary: Icon(Icons.lightbulb_circle),
           );
         },
       ),
